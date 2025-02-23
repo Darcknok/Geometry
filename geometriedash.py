@@ -9,10 +9,21 @@ pyxel.init(128, 128, title="geometrie dash")
 x_j=20
 y_j=104
 
-h_jump=7
+h_jump=8
 
 #init sprite
 pyxel.load("./sprite/res.pyxres")
+
+#init block
+block_list = [[30,104]]
+
+vie=True
+
+def creation_sol():
+    x=0
+    for i in range(16):
+        pyxel.blt(x, 112, 0, 16, 0, 16, 16)
+        x+=16
 
 
 def joueur_deplacement(x,y):
@@ -27,19 +38,34 @@ def joueur_deplacement(x,y):
 
 def jump(x,y):
     global h_jump
-    if (pyxel.btnp(pyxel.KEY_SPACE) and h_jump==7 ) or h_jump!=7 :
+    if (pyxel.btnp(pyxel.KEY_SPACE) and h_jump==8 ) or h_jump!=8 :
         y-=h_jump
         h_jump-=1
-        if h_jump<-7:
-            h_jump=7
+        if h_jump<-8:
+            h_jump=8
     return x,y
 
+#def collision():
+ #   for block in block_list:
+  #      if block[0] <= x_j+8 and block[1] <= y_j+8 and block[0]+8 >= x_j and block[1]+8 >= y_j:
+   #         vie = False
+            
+def collision_up_block(x,y):
+    global y_j,x_j
+    for block in block_list:
+        if block[0]-8 <= x_j and block[1]==y_j:
+            y -= 8
+        elif y_j<104:
+            y_j+=8
+        return y
+        
+        
 
-def creation_sol():
-    x=0
-    for i in range(16):
-        pyxel.blt(x, 112, 0, 16, 0, 16, 16)
-        x+=16
+def gameover():
+    pyxel.cls(0)
+    pyxel.text(50,50, "GAME OVER", 7)
+    
+
 
 
 
@@ -57,12 +83,16 @@ def creation_sol():
 
 
 def update():
-    global x_j , y_j , h_jump
+    global x_j , y_j , h_jump,vie ,block_list
 
 
     x_j,y_j = joueur_deplacement(x_j,y_j)
 
     x_j,y_j = jump(x_j,y_j)
+
+    y_j = collision_up_block(x_j,y_j)
+
+   # collision()
 
 ##############################################################################################################################################
 #DRAW
@@ -70,11 +100,18 @@ def update():
 
 
 def draw():
-    # vide la fenetre
-    pyxel.cls(0)
-    pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
-    creation_sol()
+    if vie==False:
+        gameover()  
+    else:
+        # vide la fenetre
+        pyxel.cls(0)
+        pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
+        creation_sol()
 
+        if vie==False:
+            gameover()    
 
+        for block in block_list:
+            pyxel.rect(block[0], block[1], 8, 8, 8)
 
 pyxel.run(update, draw)
