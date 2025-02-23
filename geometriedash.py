@@ -9,7 +9,7 @@ pyxel.init(128, 128, title="geometrie dash")
 x_j=20
 y_j=100
 
-h_jump=3
+h_jump=7
 
 #init sprite
 pyxel.load("./sprite/res.pyxres")
@@ -27,11 +27,11 @@ def joueur_deplacement(x,y):
 
 def jump(x,y):
     global h_jump
-    if (pyxel.btnr(pyxel.KEY_SPACE) and h_jump==3 ) or h_jump!=3 :
-        y-=3
+    if (pyxel.btnr(pyxel.KEY_SPACE) and h_jump==7 ) or h_jump!=7 :
+        y-=h_jump
         h_jump-=1
-        if h_jump<-3:
-            h_jump=3
+        if h_jump<-7:
+            h_jump=7
     return x,y
 
 
