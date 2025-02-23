@@ -12,7 +12,7 @@ y_j=100
 h_jump=3
 
 #init sprite
-pyxel.load("res.pyxres")
+pyxel.load("./sprite/res.pyxres")
 
 
 def joueur_deplacement(x,y):
