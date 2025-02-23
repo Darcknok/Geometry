@@ -67,7 +67,8 @@ def draw():
     # vide la fenetre
     pyxel.cls(0)
     pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
-
+    pyxel.blt(0, 112, 0, 16, 0, 16, 16)
+    pyxel.blt(16, 112, 0, 16, 0, 16, 16)
 
 
 
