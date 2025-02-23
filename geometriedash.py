@@ -27,13 +27,19 @@ def joueur_deplacement(x,y):
 
 def jump(x,y):
     global h_jump
-    if (pyxel.btnr(pyxel.KEY_SPACE) and h_jump==7 ) or h_jump!=7 :
+    if (pyxel.btnp(pyxel.KEY_SPACE) and h_jump==7 ) or h_jump!=7 :
         y-=h_jump
         h_jump-=1
         if h_jump<-7:
             h_jump=7
     return x,y
 
+
+def creation_sol():
+    x=0
+    for i in range(16):
+        pyxel.blt(x, 112, 0, 16, 0, 16, 16)
+        x+=16
 
 
 
@@ -67,8 +73,7 @@ def draw():
     # vide la fenetre
     pyxel.cls(0)
     pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
-    pyxel.blt(0, 112, 0, 16, 0, 16, 16)
-    pyxel.blt(16, 112, 0, 16, 0, 16, 16)
+    creation_sol()
 
 
 
