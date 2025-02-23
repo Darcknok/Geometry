@@ -7,7 +7,7 @@ pyxel.init(128, 128, title="geometrie dash")
 #co du joueur
 
 x_j=20
-y_j=100
+y_j=104
 
 h_jump=7
 
