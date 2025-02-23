@@ -11,7 +11,8 @@ y_j=100
 
 h_jump=3
 
-
+#init sprite
+pyxel.load("res.pyxres")
 
 
 def joueur_deplacement(x,y):
@@ -65,8 +66,7 @@ def update():
 def draw():
     # vide la fenetre
     pyxel.cls(0)
-    pyxel.rect(0,100,128,30,3)
-    pyxel.rect(x_j,y_j,8,8,1)
+    pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
 
 
 
