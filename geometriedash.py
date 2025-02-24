@@ -49,8 +49,10 @@ def collision():
             vie = False
 
 def gameover():
-    pyxel.cls(0)
-    pyxel.text(50,50, "GAME OVER", 7)
+    if vie==False:
+        pyxel.cls(0)
+        pyxel.text(45,50, "GAME OVER", 7)
+        pyxel.text(30,60, "PRESS R TO RESTART", 7)
 
 def colision_haut_block(x,y):
     global h_jump
@@ -64,6 +66,12 @@ def colision_haut_block(x,y):
         y+=4
     return y
 
+def Restart():
+    global vie
+    if vie==False and pyxel.btn(pyxel.KEY_R):
+        print({vie})
+        vie = True
+        pyxel.cls(0)
 
 
 ##############################################################################################################################################
@@ -83,6 +91,8 @@ def update():
 
     collision()
 
+    Restart()
+
 ##############################################################################################################################################
 #DRAW
 ##############################################################################################################################################
@@ -94,12 +104,11 @@ def draw():
     else:
         # vide la fenetre
         pyxel.cls(0)
-        pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
+        pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8) 
         creation_sol()
 
 
-
         for block in block_list:
-            pyxel.rect(block[0], block[1], 8, 8, 8)
+            pyxel.blt(block[0], block[1], 0, 32, 0, 8, 8)
 
 pyxel.run(update, draw)
