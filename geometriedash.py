@@ -3,7 +3,7 @@ import pyxel
 # fenetre
 pyxel.init(128, 128, title="geometrie dash")
 
-#Init Joueur 
+#Init Joueur
 
 x_j=20
 y_j=104
@@ -43,9 +43,9 @@ def jump(x,y):
     return x,y
 
 def collision():
-    global x_j,y_j
+    global x_j,y_j,vie
     for block in block_list:
-        if block[0] <= x_j+8 and block[0]+8 >= x_j and block[1]+8 >= y_j:
+        if block[0]<=x_j+8 and block[0]+8>=x_j and block[1]<y_j+8:
             vie = False
 
 def gameover():
@@ -67,10 +67,11 @@ def colision_haut_block(x,y):
     return y
 
 def Restart():
-    global vie
+    global vie,x_j,y_j
     if vie==False and pyxel.btn(pyxel.KEY_R):
-        print({vie})
         vie = True
+        x_j=20
+        y_j=104
         pyxel.cls(0)
 
 
@@ -104,7 +105,7 @@ def draw():
     else:
         # vide la fenetre
         pyxel.cls(0)
-        pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8) 
+        pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
         creation_sol()
 
 
