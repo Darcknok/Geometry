@@ -11,8 +11,9 @@ y_j=104
 
 h_jump=8
 
+
 #init sprite
-pyxel.load("./sprite/res.pyxres")
+pyxel.load("sprite/res.pyxres")
 
 #init block
 block_list = [[30,104]]
@@ -24,6 +25,10 @@ def creation_sol():
     for i in range(16):
         pyxel.blt(x, 112, 0, 16, 0, 16, 16)
         x+=16
+
+
+
+
 
 
 def joueur_deplacement(x,y):
@@ -43,30 +48,36 @@ def jump(x,y):
         h_jump-=1
         if h_jump<-8:
             h_jump=8
+
     return x,y
 
 #def collision():
  #   for block in block_list:
   #      if block[0] <= x_j+8 and block[1] <= y_j+8 and block[0]+8 >= x_j and block[1]+8 >= y_j:
    #         vie = False
-            
-def collision_up_block(x,y):
-    global y_j,x_j
-    for block in block_list:
-        if block[0]-8 <= x_j and block[1]==y_j:
-            y -= 8
-        elif y_j<104:
-            y_j+=8
-        return y
-        
-        
+
+
+
 
 def gameover():
     pyxel.cls(0)
     pyxel.text(50,50, "GAME OVER", 7)
-    
 
 
+
+
+
+def colision_haut_block(x,y):
+    global h_jump
+    bloc_bas=False
+    for block in block_list:
+        if block[0] <= x_j+8 and block[1] == y_j+8 and block[0]+8 >= x_j:
+            h_jump=8
+            y=block[1]-8
+            bloc_bas=True
+    if bloc_bas==False and y<104:
+        y+=1
+    return y
 
 
 
@@ -90,7 +101,7 @@ def update():
 
     x_j,y_j = jump(x_j,y_j)
 
-    y_j = collision_up_block(x_j,y_j)
+    y_j= colision_haut_block(x_j,y_j)
 
    # collision()
 
@@ -101,7 +112,7 @@ def update():
 
 def draw():
     if vie==False:
-        gameover()  
+        gameover()
     else:
         # vide la fenetre
         pyxel.cls(0)
@@ -109,7 +120,7 @@ def draw():
         creation_sol()
 
         if vie==False:
-            gameover()    
+            gameover()
 
         for block in block_list:
             pyxel.rect(block[0], block[1], 8, 8, 8)
