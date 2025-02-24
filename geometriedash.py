@@ -75,8 +75,8 @@ def colision_haut_block(x,y):
             h_jump=8
             y=block[1]-8
             bloc_bas=True
-    if bloc_bas==False and y<104:
-        y+=1
+    if bloc_bas==False and y<104 and h_jump==8:
+        y+=2
     return y
 
 
