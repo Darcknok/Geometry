@@ -16,7 +16,7 @@ h_jump=8
 pyxel.load("sprite/res.pyxres")
 
 #init block
-block_list = [[30,104]]
+block_list = [[30,104],[40,104],[40,96]]
 
 vie=True
 
@@ -51,10 +51,11 @@ def jump(x,y):
 
     return x,y
 
-#def collision():
- #   for block in block_list:
-  #      if block[0] <= x_j+8 and block[1] <= y_j+8 and block[0]+8 >= x_j and block[1]+8 >= y_j:
-   #         vie = False
+def collision():
+    global x_j,y_j
+    for block in block_list:
+        if block[0] <= x_j+8 and block[0]+8 >= x_j and block[1]+8 >= y_j:
+            vie = False
 
 
 
@@ -103,7 +104,7 @@ def update():
 
     y_j= colision_haut_block(x_j,y_j)
 
-   # collision()
+    collision()
 
 ##############################################################################################################################################
 #DRAW
@@ -119,8 +120,7 @@ def draw():
         pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
         creation_sol()
 
-        if vie==False:
-            gameover()
+
 
         for block in block_list:
             pyxel.rect(block[0], block[1], 8, 8, 8)
