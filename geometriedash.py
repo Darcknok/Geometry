@@ -3,14 +3,12 @@ import pyxel
 # fenetre
 pyxel.init(128, 128, title="geometrie dash")
 
-
-#co du joueur
+#Init Joueur 
 
 x_j=20
 y_j=104
-
 h_jump=8
-
+vie=True
 
 #init sprite
 pyxel.load("sprite/res.pyxres")
@@ -18,18 +16,11 @@ pyxel.load("sprite/res.pyxres")
 #init block
 block_list = [[30,104],[40,104],[40,96]]
 
-vie=True
-
 def creation_sol():
     x=0
     for i in range(16):
         pyxel.blt(x, 112, 0, 16, 0, 16, 16)
         x+=16
-
-
-
-
-
 
 def joueur_deplacement(x,y):
 
@@ -57,16 +48,9 @@ def collision():
         if block[0] <= x_j+8 and block[0]+8 >= x_j and block[1]+8 >= y_j:
             vie = False
 
-
-
-
 def gameover():
     pyxel.cls(0)
     pyxel.text(50,50, "GAME OVER", 7)
-
-
-
-
 
 def colision_haut_block(x,y):
     global h_jump
@@ -79,13 +63,6 @@ def colision_haut_block(x,y):
     if bloc_bas==False and y<104 and h_jump==8:
         y+=4
     return y
-
-
-
-
-
-
-
 
 
 
