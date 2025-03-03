@@ -56,8 +56,9 @@ class jeu():
     #propiété block
     def collision_block(self):
         for block in self.block_list:
-            if block[0]<=self.x_j+8 and block[0]+8>=self.x_j and block[1]<self.y_j+8:
-                self.vie = False
+        if self.x_j+8>block[0] and self.y_j+8>block[1]:
+            self.vie = False
+
 
 
 
