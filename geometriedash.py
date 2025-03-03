@@ -21,12 +21,17 @@ class jeu():
 
         pyxel.run(self.update, self.draw)
 
+    #création map
     def creation_sol(self):
         x=0
         for i in range(16):
             pyxel.blt(x, 112, 0, 16, 0, 16, 16)
             x+=16
 
+
+
+
+    #action du joueur
     def joueur_deplacement(self):
 
         if pyxel.btn(pyxel.KEY_D):
@@ -46,15 +51,15 @@ class jeu():
 
 
 
-    def collision(self):
+
+
+    #propiété block
+    def collision_block(self):
         for block in self.block_list:
             if block[0]<=self.x_j+8 and block[0]+8>=self.x_j and block[1]<self.y_j+8:
                 self.vie = False
 
-    def gameover(self):
-        pyxel.cls(0)
-        pyxel.text(45,50, "GAME OVER", 7)
-        pyxel.text(30,60, "PRESS R TO RESTART", 7)
+
 
     def colision_haut_block(self):
         bloc_bas=False
@@ -67,6 +72,17 @@ class jeu():
             self.y_j+=4
 
 
+
+
+
+
+
+
+    #parametre jeu
+    def gameover(self):
+        pyxel.cls(0)
+        pyxel.text(45,50, "GAME OVER", 7)
+        pyxel.text(30,60, "PRESS R TO RESTART", 7)
     def Restart(self):
 
         if self.vie==False and pyxel.btn(pyxel.KEY_R):
@@ -91,7 +107,7 @@ class jeu():
 
         self.colision_haut_block()
 
-        self.collision()
+        self.collision_block()
 
         self.Restart()
 
@@ -109,7 +125,7 @@ class jeu():
             pyxel.blt(self.x_j, self.y_j, 0, 0, 0, 8, 8)
             self.creation_sol()
 
-
+            #affichage block
             for block in self.block_list:
                 pyxel.blt(block[0], block[1], 0, 32, 0, 8, 8)
 
