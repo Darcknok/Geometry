@@ -1,78 +1,79 @@
 import pyxel
 
-# fenetre
-pyxel.init(128, 128, title="geometrie dash")
+class jeu():
+    def __init__(self):
+        # fenetre
+        pyxel.init(128, 128, title="geometrie dash")
 
-#Init Joueur
+        #Init Joueur
 
-x_j=20
-y_j=104
-h_jump=8
-vie=True
+        self.x_j=20
+        self.y_j=104
+        self.h_jump=8
+        self.vie=True
 
-#init sprite
-pyxel.load("sprite/res.pyxres")
+        #init sprite
+        pyxel.load("sprite/res.pyxres")
 
-#init block
-block_list = [[30,104],[40,104],[40,96]]
+        #init block
+        self.block_list = [[30,104],[40,104],[40,96]]
 
-def creation_sol():
-    x=0
-    for i in range(16):
-        pyxel.blt(x, 112, 0, 16, 0, 16, 16)
-        x+=16
 
-def joueur_deplacement(x,y):
+        pyxel.run(self.update, self.draw)
 
-    if pyxel.btn(pyxel.KEY_D):
-        if (x < 120) :
-            x = x + 1
-    if pyxel.btn(pyxel.KEY_Q):
-        if (x > 0) :
-            x = x - 1
-    return x, y
+    def creation_sol(self):
+        x=0
+        for i in range(16):
+            pyxel.blt(x, 112, 0, 16, 0, 16, 16)
+            x+=16
 
-def jump(x,y):
-    global h_jump
-    if (pyxel.btnp(pyxel.KEY_SPACE) and h_jump==8 ) or h_jump!=8 :
-        y-=h_jump
-        h_jump-=1
-        if h_jump<-8:
-            h_jump=8
+    def joueur_deplacement(self):
 
-    return x,y
+        if pyxel.btn(pyxel.KEY_D):
+            if (self.x_j < 120) :
+                self.x_j =self.x_j + 1
+        if pyxel.btn(pyxel.KEY_Q):
+            if (self.x_j > 0) :
+                self.x_j = self.x_j - 1
 
-def collision():
-    global x_j,y_j,vie
-    for block in block_list:
-        if block[0]<=x_j+8 and block[0]+8>=x_j and block[1]<y_j+8:
-            vie = False
 
-def gameover():
-    if vie==False:
+    def jump(self):
+        if (pyxel.btnp(pyxel.KEY_SPACE) and self.h_jump==8 ) or self.h_jump!=8 :
+            self.y_j-=self.h_jump
+            self.h_jump-=1
+            if self.h_jump<-8:
+                self.h_jump=8
+
+
+
+    def collision(self):
+        for block in self.block_list:
+            if block[0]<=self.x_j+8 and block[0]+8>=self.x_j and block[1]<self.y_j+8:
+                self.vie = False
+
+    def gameover(self):
         pyxel.cls(0)
         pyxel.text(45,50, "GAME OVER", 7)
         pyxel.text(30,60, "PRESS R TO RESTART", 7)
 
-def colision_haut_block(x,y):
-    global h_jump
-    bloc_bas=False
-    for block in block_list:
-        if block[0] <= x_j+8 and block[1] == y_j+8 and block[0]+8 >= x_j:
-            h_jump=8
-            y=block[1]-8
-            bloc_bas=True
-    if bloc_bas==False and y<104 and h_jump==8:
-        y+=4
-    return y
+    def colision_haut_block(self):
+        bloc_bas=False
+        for block in self.block_list:
+            if block[0] <= self.x_j+8 and block[1] == self.y_j+8 and block[0]+8 >= self.x_j:
+                self.h_jump=8
+                self.y_j=block[1]-8
+                bloc_bas=True
+        if bloc_bas==False and self.y_j<104 and self.h_jump==8:
+            self.y_j+=4
 
-def Restart():
-    global vie,x_j,y_j
-    if vie==False and pyxel.btn(pyxel.KEY_R):
-        vie = True
-        x_j=20
-        y_j=104
-        pyxel.cls(0)
+
+    def Restart(self):
+
+        if self.vie==False and pyxel.btn(pyxel.KEY_R):
+            self.vie = True
+            self.x_j=20
+            self.y_j=104
+            pyxel.cls(0)
 
 
 ##############################################################################################################################################
@@ -80,36 +81,36 @@ def Restart():
 ##############################################################################################################################################
 
 
-def update():
-    global x_j , y_j , h_jump,vie ,block_list
+    def update(self):
 
 
-    x_j,y_j = joueur_deplacement(x_j,y_j)
 
-    x_j,y_j = jump(x_j,y_j)
+        self.joueur_deplacement()
 
-    y_j= colision_haut_block(x_j,y_j)
+        self.jump()
 
-    collision()
+        self.colision_haut_block()
 
-    Restart()
+        self.collision()
 
-##############################################################################################################################################
-#DRAW
-##############################################################################################################################################
+        self.Restart()
 
-
-def draw():
-    if vie==False:
-        gameover()
-    else:
-        # vide la fenetre
-        pyxel.cls(0)
-        pyxel.blt(x_j, y_j, 0, 0, 0, 8, 8)
-        creation_sol()
+    ##############################################################################################################################################
+    #DRAW
+    ##############################################################################################################################################
 
 
-        for block in block_list:
-            pyxel.blt(block[0], block[1], 0, 32, 0, 8, 8)
+    def draw(self):
+        if self.vie==False:
+            self.gameover()
+        else:
+            # vide la fenetre
+            pyxel.cls(0)
+            pyxel.blt(self.x_j, self.y_j, 0, 0, 0, 8, 8)
+            self.creation_sol()
 
-pyxel.run(update, draw)
+
+            for block in self.block_list:
+                pyxel.blt(block[0], block[1], 0, 32, 0, 8, 8)
+
+jeu()
