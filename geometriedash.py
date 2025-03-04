@@ -57,7 +57,7 @@ class jeu():
     def collision_block(self):
         for block in self.block_list:
             if self.x_j+8>block[0] and self.y_j+8>block[1]:
-            self.vie = False
+                self.vie = False
 
 
 
