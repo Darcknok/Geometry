@@ -54,23 +54,19 @@ class jeu():
 
 
     #propiété block
-    def collision_block(self):
-        for block in self.block_list:
-            if self.x_j+8>block[0] and self.y_j+8>block[1]:
-                self.vie = False
 
-
-
-
-    def colision_haut_block(self):
+    def colission_block(self):
         bloc_bas=False
         for block in self.block_list:
-            if block[0] <= self.x_j+8 and block[1] == self.y_j+8 and block[0]+8 >= self.x_j:
+            if block[0] <= self.x_j+8 and block[1] == self.y_j+8 and block[0]+8 >= self.x_j: #colision cote haut
                 self.h_jump=8
                 self.y_j=block[1]-8
                 bloc_bas=True
-        if bloc_bas==False and self.y_j<104 and self.h_jump==8:
+            elif self.x_j+8>block[0] and self.x_j<block[0] and self.y_j+8>block[1]:
+                self.vie=False
+        if bloc_bas==False and self.y_j<104 and self.h_jump==8: #tombe si pas de block
             self.y_j+=4
+
 
 
 
@@ -106,9 +102,7 @@ class jeu():
 
         self.jump()
 
-        self.colision_haut_block()
-
-        self.collision_block()
+        self.colission_block()
 
         self.Restart()
 
