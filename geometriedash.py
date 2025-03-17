@@ -22,7 +22,7 @@ class jeu():
 
         #init block
         self.block_list = [[150,104],[166,104],[166,96],[204,104],[204,40]]
-
+        self.pick_list = [[150,96],[120,104]]
 
         pyxel.run(self.update, self.draw)
 
@@ -50,6 +50,12 @@ class jeu():
                 self.h_jump-=(8/6)
                 if self.h_jump<-8:
                     self.h_jump=8
+
+    def tomber(self):
+        if self.bloc_bas==False and self.y_j<104 and self.h_jump==8: #tombe si pas de block
+            self.y_j+=4
+        if self.y_j>104:
+            self.y_j=104
 
     def score(self):
         if self.vie:
@@ -79,14 +85,15 @@ class jeu():
                     self.bloc_bas=True
                 elif self.x_j+8>block[0] and self.x_j<block[0] and self.y_j+8>block[1] and self.y_j<block[1]+8:
                     self.vie=False
-            if self.bloc_bas==False and self.y_j<104 and self.h_jump==8: #tombe si pas de block
-                self.y_j+=4
-            if self.y_j>104:
-                self.y_j=104
 
 
 
-
+    #propriete pick
+    def collision_pick():
+        if self.vie:
+            for pick in self.pick_list:
+                if (self.x_j+8>pick[0] and self.y_j+8>pick[1] and self.y_j<pick[1] ):
+                    self.vie=False
 
 
 
@@ -129,6 +136,8 @@ class jeu():
 
         self.colission_block()
 
+        self.tomber()
+
         self.Restart()
 
         self.debug()
@@ -150,10 +159,13 @@ class jeu():
             pyxel.cls(0)
             pyxel.blt(self.x_j, self.y_j, 0, 0, 0, 8, 8)
             self.creation_sol()
+            self.score_draw()
 
             #affichage block
             for block in self.block_list:
                 pyxel.blt(block[0], block[1], 0, 32, 0, 8, 8)
-                self.score_draw()
+
+            for pick in self.pick_list:
+                pyxel.rect(pick[0],pick[1],8,8,7)
 
 jeu()
